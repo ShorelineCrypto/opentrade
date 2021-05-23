@@ -700,57 +700,6 @@ exports.onAccountGetOrderHistory = function(req, res)
     onError(req, res, 'getorderhistory under construction');
 }
 
-exports.onCreateCoupon = function(req, res)
-{
-    return exports.onAccountWithdraw(req, res);
-}
-
-exports.onRedeemCoupon = function(req, res)
-{
-    const dataParsed = url.parse(req.url);
-    if (!dataParsed || !dataParsed.query)
-        return onError(req, res, 'Bad request');
-
-    const queryStr = querystring.parse(dataParsed.query);
-    //if (!queryStr.apikey || !queryStr.nonce)
-    //    return onError(req, res, 'Bad request. Required parameter (apikey or nonce) not found.');
-    
-    if (!queryStr.coupon)
-        return onError(req, res, 'Bad request. Required parameter (coupon) not found.');
-
-    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-    
-    CheckAPIkey(queryStr.apikey || 0, req.headers['apisign'] || 0, fullUrl, ret => {
-        try
-        {
-            if (ret.success == false) throw new Error(ret.message);
-            if (ret.key.withdraw == 0) throw new Error('apikey disabled for withdraw');
-            
-            wallet.RedeemCoupon(ret.key.userid, queryStr.coupon, ret => {
-                if (!ret || ret.result != true)
-                    return onError(req, res, ret.message && ret.message.length ? ret.message : "Redeem error");
-                
-                return utils.renderJSON(req, res, ret);
-            });
-        }
-        catch(e) {
-            utils.GetSessionStatus(req, status => {
-                if (!status.active)
-                    return onError(req, res, 'User not logged');
-                    
-                wallet.RedeemCoupon(status.id, queryStr.coupon, ret => {
-                    if (!ret || ret.result != true)
-                        return onError(req, res, ret.message && ret.message.length ? ret.message : "Redeem error");
-                    
-                    return utils.renderJSON(req, res, ret);
-                });
-            });
-//            return onError(req, res, e.message);
-        }
-    });
-}
-
-
 exports.onAccountWithdraw = async function(req, res)
 {
     const dataParsed = url.parse(req.url);
