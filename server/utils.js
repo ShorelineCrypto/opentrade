@@ -37,6 +37,28 @@ exports.isNumeric = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
+exports.roundDown = function(number, decimals) {
+
+    try
+    {
+        if (!exports.isNumeric(number))
+            return number;
+
+        decimals = decimals || 7;
+
+        if (!exports.isNumeric(decimals))
+            return number;
+
+        const ret =  ( Math.floor( number * Math.pow(10, decimals) ) / Math.pow(10, decimals) )*1;
+
+        return ret; //(ret < 0.000001) ? 0 : ret;
+    }
+    catch(e)
+    {
+        return number;
+    }
+}
+
 exports.Encrypt = function(str)
 {
     const algorithm = 'aes256';
@@ -635,8 +657,14 @@ exports.CheckCoin = function(coin, callback)
 
 exports.GetCoinFromTicker = function(ticker, callback)
 {
-    g_constants.dbTables['coins'].selectAll('ROWID AS id, *', 'ticker="'+escape(ticker)+'"', '', (err, rows) => {
-        if (err || !rows || !rows.length) return callback({});
-        callback(rows[0]);
-    })
+    return new Promise(async (ok, cancel) => {
+        try {
+            const rows = await g_constants.dbTables['coins'].Select('ROWID AS id, *', 'ticker="'+escape(ticker)+'"', '');
+            if (!rows || !rows.length || !rows[0].name) throw new Error('Coin ticker ('+escape(ticker)+') not found!');
+            return ok(rows[0]);
+        }
+        catch(e) {
+            return cancel(e);
+        }
+    });
 }

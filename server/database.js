@@ -225,6 +225,16 @@ exports.Init = function(callback)
             g_constants.dbTables[i]['selectAll'] = function(cols, where, other, callback, param) {
                 SelectAll(cols, this.name, where, other, callback, param);};
             
+	    g_constants.dbTables[i]['Select'] = function(cols, where = "", other = "", param) {
+                const name = this.name;
+                return new Promise((fulfilled, rejected) => {
+                    SelectAll(cols, name, where, other, (err, rows) => {
+                        if (err || !rows) return rejected( new Error(err && err.message ? err.message : "Select error") );
+                        fulfilled(rows);
+                    }, param);
+                });
+            };
+ 
             cbError(false);
         });
     });
