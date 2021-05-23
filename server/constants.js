@@ -18,7 +18,7 @@ exports.share = {
    
    TRADE_MAIN_COIN: "Dogecoin",
    TRADE_MAIN_COIN_TICKER: "DOGE",
-   TRADE_DEFAULT_PAIR: "Marinecoin"
+   TRADE_DEFAULT_PAIR: "Nengcoin"
 };
 
 exports.TRADE_COMISSION = 0.002;
