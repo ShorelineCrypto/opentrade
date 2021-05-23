@@ -77,6 +77,51 @@ $obj = json_decode($execResult);
     </div>
 </div>
                 <br><br>
+<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Python_Example1" aria-expanded="false" aria-controls="Python_Example1">
+    Python example
+</button>
+<div class="collapse" id="Python_Example1">
+    <div class="card card-body">
+                <pre>
+#! /usr/bin/python
+
+import time
+import hmac
+import hashlib
+import requests
+
+
+apifunc = '/account/getdepositaddress'
+currency = 'NENG'
+
+apikey = '__API_KEY__';
+apisecret = '__API_SECRET__';
+
+nonce =  str(int(time.time()))
+uri = 'https://shorelinecrypto.com/api/v1' + apifunc + '?apikey=' +  apikey + '&ampnonce=' + nonce + '&ampcurrency=' +  currency
+path =   '/api/v1' + apifunc + '?apikey=' +  apikey + '&ampnonce=' + nonce + '&ampcurrency=' +  currency
+
+signature = hmac.new(apisecret, msg=uri, digestmod=hashlib.sha512).hexdigest()
+
+print(uri)
+print(signature)
+
+datadict = {'host': 'shorelinecrypto.com',
+            'path': path
+}
+
+headerdict = {'apisign':  signature}
+
+request = requests.get(
+    url=uri, data=datadict, headers = headerdict)
+
+print(request.text)
+ 
+		</pre>
+
+    </div>
+</div>
+                <br><br>
 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Node_Example1" aria-expanded="false" aria-controls="Node_Example1">
     node.js example
 </button>   
