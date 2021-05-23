@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <% include ../../partials/head %>
+  <body>
+
+    <% include ../../partials/header %>
+
+    <% var messageSuccess = ""; var messageFail = "";%>
+    <% try{ %>
+    <%  if (error) messageFail = message; %>
+    <%  if (!error) messageSuccess = message; %>
+    <% }catch(e){console.log(e.message)}%>
+    
+    <input id='id_server_message_success' type='hidden' value="<%= escape(messageSuccess) %>">
+    <input id='id_server_message_fail' type='hidden' value="<%= escape(messageFail) %>">
+
+    <div class="container pt-2">
+        <% include ../../partials/alerts %>
+        <h2>Wallet</h2>
+        <div class='container'>
+            <div class='row'>
+                <div class="offset2 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            Balance
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped table-bordered">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Currency</th>
+                                  <th scope="col">Balance</th>
+                                  <th scope="col">Awaiting deposit</th>
+                                  <th scope="col">Reserved in orders</th>
+                                  <th scope="col">Wallet Management</th>
+                                </tr>
+                              </thead>
+                              <tbody id='id_wallet_body'>
+                              </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='row justify-content-md-center'>
+                <div class='col-md-12'>
+                    <div id="ballsWaveG">
+                    	<div id="ballsWaveG_1" class="ballsWaveG"></div>
+                    	<div id="ballsWaveG_2" class="ballsWaveG"></div>
+                    	<div id="ballsWaveG_3" class="ballsWaveG"></div>
+                    	<div id="ballsWaveG_4" class="ballsWaveG"></div>
+                    	<div id="ballsWaveG_5" class="ballsWaveG"></div>
+                    	<div id="ballsWaveG_6" class="ballsWaveG"></div>
+                    	<div id="ballsWaveG_7" class="ballsWaveG"></div>
+                    	<div id="ballsWaveG_8" class="ballsWaveG"></div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div> <!-- /container -->
+
+
+    <% include ../../partials/footer %>
+    <script src='/js/wallet.js'></script>
+  </body>
+</html>
