@@ -37,6 +37,22 @@ exports.isNumeric = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
+exports.isMarketStr = function(market) {
+  const regexpat = /^DOGE\-\w{2,4}$/;
+  return regexpat.test(market);
+}
+
+exports.isCurrencyStr = function(currency) {
+  const regexpat = /^\w{2,4}$/;
+  return regexpat.test(currency);
+}
+
+exports.isUuidStr = function(uuid) {
+  const regexpat = /^[\w\-\.]+$/;
+  return regexpat.test(uuid);
+}
+
+
 exports.roundDown = function(number, decimals) {
 
     try
@@ -558,9 +574,22 @@ exports.ValidateEmail = function(text)
 {
     if (!text || !text.length)
         return false;
-            
+
+    const regexpat = /^[\w\.]+@[\w\.]+$/;
+    if (!regexpat.test(text))
+        return false;
+  
     const mailformat = /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|club|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/;
     return text.match(mailformat);
+}
+
+exports.ValidateUsername = function(text)
+{
+    if (!text || !text.length)
+        return false;
+       
+    const regexpat = /^[\w\.]+$/;
+    return regexpat.test(text);
 }
 
 let g_validateRecaptcha = 0;

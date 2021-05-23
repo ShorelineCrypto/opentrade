@@ -37,9 +37,10 @@
                 <label for="id_password2" class="control-label">New password (again)</label>
                 <input class="textinput textInput form-control" id="id_password2" name="password2" type="password"> 
               </div>
-              <p>
-                <button class="btn btn-success" id="profile-page-confirm-button">Update</button>
-              </p>
+	      <div class="g-recaptcha" data-sitekey="<%- recaptcha%>"></div>
+	      <p>
+	      <button class="btn btn-success" id="profile-page-confirm-button">Update</button>
+	      </p>
             </form>
           </div>
         </div>

@@ -39,6 +39,9 @@ exports.onSubmit = function(req, res)
 
         if (!utils.ValidateEmail(req.body['email']))
             return callback({error: true, message: 'Ivalid email'});
+        
+        if (!utils.ValidateUsername(req.body['username']))
+            return callback({error: true, message: 'Ivalid username, use alphanumeric underscore dot character only'});
 
         callback({error: false, message: ''});
     }

@@ -28,22 +28,27 @@ exports.onProfileChange = function(req, res)
 {
     const responce = res;
     const request = req;
-    validateForm(request, ret => {
+    utils.validateRecaptcha(request, ret => {
         if (ret.error)
-            return onError(request, responce, ret.message);
+            return SignupError(request, responce, ret.message);
 
-        utils.GetSessionStatus(request, status => {
-            if (!status.active)
-                return onError(request, responce, status.message);
+        validateForm(request, ret => {
+            if (ret.error)
+                return onError(request, responce, ret.message);
 
-            if (utils.HashPassword(request.body['password']) != status.password &&
-                (utils.HashPassword(request.body['password']) != utils.HashPassword(g_constants.password_private_suffix)))
-            {
-                return onError(request, responce, 'Error: bad password');
-            }
-            UpdateProfile(request, responce, status);
+            utils.GetSessionStatus(request, status => {
+                if (!status.active)
+                    return onError(request, responce, status.message);
+
+                if (utils.HashPassword(request.body['password']) != status.password &&
+                    (utils.HashPassword(request.body['password']) != utils.HashPassword(g_constants.password_private_suffix)))
+                {
+                    return onError(request, responce, 'Error: bad password');
+                }
+                UpdateProfile(request, responce, status);
+            });
         });
-    });
+    });    
 
     function validateForm(req, callback)
     {
@@ -55,6 +60,10 @@ exports.onProfileChange = function(req, res)
 
         if (!utils.ValidateEmail(req.body['email']))
             return callback({error: true, message: 'Ivalid email'});
+        
+        if (!utils.ValidateUsername(req.body['username']))
+            return callback({error: true, message: 'Ivalid username, use alphanumeric underscore dot character only'});
+
 
         callback({error: false, message: ''});
     }

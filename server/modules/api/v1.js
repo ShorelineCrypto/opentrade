@@ -129,7 +129,10 @@ exports.onGetOrderbook = function(req, res)
     const queryStr = querystring.parse(dataParsed.query);
     if (!queryStr.market)
         return onError(req, res, 'Bad request. Parameter "market" not found');
-
+   
+    if (!utils.isMarketStr(queryStr.market))
+        return onError(req, res, 'Bad request. Parameter "market" is in wrong format');
+    
     const data = queryStr.market.split('-');
     if (!data)
         return onError(req, res, 'Bad request. Parameter "market" is invalid');
@@ -178,6 +181,9 @@ exports.onGetMarketSummary = async function(req, res)
     if (!queryStr.market)
         return onError(req, res, 'Bad request. Parameter "market" not found');
         
+    if (!utils.isMarketStr(queryStr.market))
+        return onError(req, res, 'Bad request. Parameter "market" is in wrong format');
+      
     const period = (queryStr.period && (queryStr.period == 24 || queryStr.period == 250 || queryStr.period == 1000 || queryStr.period == 6000)) ? queryStr.period*1 : 24;
 
     console.log('period='+period+" queryStr="+JSON.stringify(queryStr));
@@ -272,6 +278,9 @@ exports.onGetMarketHistory = function(req, res)
     if (!queryStr.market)
         return onError(req, res, 'Bad request. Parameter "market" not found');
 
+    if (!utils.isMarketStr(queryStr.market))
+        return onError(req, res, 'Bad request. Parameter "market" is in wrong format');
+      
     const data = queryStr.market.split('-');
     if (!data || !data.length || data.length != 2)
         return  onError(req, res, 'Bad request. Parameter "market" is invalid');
@@ -324,7 +333,10 @@ async function SubmitOrder(req, res, buysell)
 
         const queryStr = querystring.parse(dataParsed.query);
         if (!queryStr.apikey || !queryStr.nonce || !queryStr.market || !queryStr.quantity || !queryStr.rate) throw new Error('Bad request. Required parameter (apikey or nonce or market or quantity or rate) not found.');
-    
+
+        if (!utils.isMarketStr(queryStr.market))
+            return onError(req, res, 'Bad request. Parameter "market" is in wrong format');
+          
         const currency = queryStr.market.split('-');
         if (!currency.length || currency.length != 2) throw new Error('Bad request. Parameter currency is invalid.');
         
@@ -386,6 +398,9 @@ exports.onMarketCancel = function(req, res)
         if (!queryStr.apikey || !queryStr.nonce || !queryStr.uuid) throw 'Bad request. Required parameter (apikey or nonce or uuid) not found.';
         if (!queryStr.uuid.length) throw 'Bad uuid';
         
+        if (!utils.isUuidStr(queryStr.uuid))
+            return onError(req, res, 'Bad request. Parameter "uuid" is in wrong format');
+          
         var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
     
         CheckAPIkey(queryStr.apikey, req.headers['apisign'], fullUrl, ret => {
@@ -432,6 +447,9 @@ exports.onMarketGetOpenOrders = async function(req, res)
         const queryStr = querystring.parse(dataParsed.query);
         if (!queryStr.apikey || !queryStr.nonce || !queryStr.market) throw new Error('Bad request. Required parameter (apikey or nonce or market) not found.');
     
+        if (!utils.isMarketStr(queryStr.market))
+            return onError(req, res, 'Bad request. Parameter "market" is in wrong format');
+      
         const currency = queryStr.market.split('-');
         if (!currency.length || currency.length != 2) throw new Error('Bad request. Parameter currency is invalid.');
         
@@ -489,6 +507,9 @@ exports.onAccountGetBalance = async function(req, res)
 
         const queryStr = querystring.parse(dataParsed.query);
         if (!queryStr.apikey || !queryStr.nonce || !queryStr.currency) throw new Error('Bad request. Required parameter (apikey or nonce or currency) not found.');
+    
+        if (!utils.isCurrencyStr(queryStr.currency))
+            return onError(req, res, 'Bad request. Parameter "currency" is in wrong format');
     
         const coin = await utils.GetCoinFromTicker(queryStr.currency);//, coin => {
             if (!coin || !coin.name) 
@@ -615,6 +636,9 @@ exports.onAccountGetDepositAddress = async function(req, res)
     if (!queryStr.apikey || !queryStr.nonce || !queryStr.currency)
         return onError(req, res, 'Bad request. Required parameter (apikey or nonce or currency) not found.');
     
+    if (!utils.isCurrencyStr(queryStr.currency))
+        return onError(req, res, 'Bad request. Parameter "currency" is in wrong format');
+    
     const coin = await utils.GetCoinFromTicker(queryStr.currency); //, coin => {
         if (!coin || !coin.name) 
             return onError(req, res, 'Coin ticker not found');
@@ -652,6 +676,9 @@ exports.onAccountGetOrder = function(req, res)
         if (!queryStr.apikey || !queryStr.nonce || !queryStr.uuid) throw new Error('Bad request. Required parameter (apikey or nonce or uuid) not found.');
         if (!queryStr.uuid.length) throw new Error('Bad uuid');
         
+        if (!utils.isUuidStr(queryStr.uuid))
+            return onError(req, res, 'Bad request. Parameter "uuid" is in wrong format');
+          
         var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
     
         CheckAPIkey(queryStr.apikey, req.headers['apisign'], fullUrl, ret => {
@@ -711,6 +738,9 @@ exports.onAccountWithdraw = async function(req, res)
     if (!queryStr.quantity || !queryStr.currency)
         return onError(req, res, 'Bad request. Required parameter (quantity or currency) not found.');
         
+    if (!utils.isCurrencyStr(queryStr.currency))
+        return onError(req, res, 'Bad request. Parameter "currency" is in wrong format');
+      
     if (!utils.isNumeric(queryStr.quantity))
         return onError(req, res, 'Bad request. quantity is not numeric value');
     if (queryStr.quantity < 0.00001)
@@ -747,25 +777,13 @@ exports.onAccountWithdraw = async function(req, res)
                 }
                 else
                 {
-                    wallet.ProcessWithdrawToCoupon(ret.key.userid, queryStr.quantity, coin.name, ret => {
-                        if (ret.error)
-                            return onError(req, res, ret.message);
-                            
-                        return utils.renderJSON(req, res, ret);
-                    })
+                    return onError(req, res, 'Bad request. Coupon function not supported.');
                 }
             }
             catch(e) {
                 utils.GetSessionStatus(req, status => {
                     if (!status.active || status.id != 1)
-                        return onError(req, res, 'This operation is allowed for root only!');
-                        
-                    wallet.ProcessWithdrawToCoupon(ret.key.userid, queryStr.quantity, coin.name, ret => {
-                        if (ret.error)
-                            return onError(req, res, ret.message);
-                            
-                        return utils.renderJSON(req, res, ret);
-                    })
+                        return onError(req, res, 'This operation is allowed for root only!');       
                 });
             }
         }, req);
