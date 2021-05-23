@@ -50,7 +50,7 @@ mkdir ~/opentrade/server/database
 
 ### Setup Your Web Site Domain and SSL Certificate, Google Recaptcha
 
-Purchase your domain and SSL certificate from vendor like Namecheap (affiliate link: <script src="https://www.anrdoezrs.net/am/100415199/impressions/page/am.js"></script> ), 
+Purchase your domain and SSL certificate from vendor like Namecheap ( https://www.namecheap.com/ ), 
 Setup Google Recaptcha with public/private key to be ready for the exchange launch.
 
 
