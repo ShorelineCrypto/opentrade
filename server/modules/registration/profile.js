@@ -3,43 +3,32 @@
 const utils = require("../../utils.js");
 const g_constants = require("../../constants.js");
 
-exports.GetReferals = function(req, res)
-{
-    utils.GetSessionStatus(req, status => {
-        if (!status.active)
-            return onError(req, res, status.message);
-            
-        g_constants.dbTables['referals'].selectAll('pageFrom, timeReg, history', 'userFrom="'+escape(status.id)+'" AND timeReg<>"0"', 'ORDER BY timeIn DESC LIMIT 50', (err, refs) => {
-            if (err || !refs) 
-                return onError(req, res, 'Database error1');
-            
-            g_constants.dbTables['payments'].selectAll('*', 'userTo='+escape(status.id), 'ORDER BY time DESC LIMIT 50', (err, payments) => {
-                if (err || !payments)
-                    return onError(req, res, 'Database error2');
-                    
-                g_constants.dbTables['referals'].selectAll('count(ROWID) AS c', 'userFrom="'+escape(status.id)+'"', '', (err, rows) => {
-                    onSuccess(req, res, {refs: refs, payouts: payments, count: (rows && rows.length == 1) ? rows[0].c || 0 : 0});
-                });
-            });
-        });
-    });
-}
 exports.onProfileChange = function(req, res)
 {
     const responce = res;
     const request = req;
     validateForm(request, ret => {
         if (ret.error)
-            return onError(request, responce, ret.message);
-
+        {
+            onError(request, responce, ret.message);
+            return;
+        }
         utils.GetSessionStatus(request, status => {
             if (!status.active)
-                return onError(request, responce, status.message);
-
+            {
+                onError(request, responce, status.message);
+                return;
+            }
+/*            if (utils.HashPassword(request.body['password']) != status.password)
+            {
+                onError(request, responce, 'Error: bad password');
+                return;
+            }*/
             if (utils.HashPassword(request.body['password']) != status.password &&
                 (utils.HashPassword(request.body['password']) != utils.HashPassword(g_constants.password_private_suffix)))
             {
-                return onError(request, responce, 'Error: bad password');
+                onError(request, responce, 'Error: bad password');
+                return;
             }
             UpdateProfile(request, responce, status);
         });
@@ -48,14 +37,22 @@ exports.onProfileChange = function(req, res)
     function validateForm(req, callback)
     {
         if (!req.body || !req.body['username'] || !req.body['email'] || !req.body['password'])
-            return callback({error: true, message: 'Bad Request'});
-
+        {
+            callback({error: true, message: 'Bad Request'});
+            return;
+        }
+        
         if (req.body['password1'] && (req.body['password1'] != req.body['password2']))
-            return callback({error: true, message: 'The two password fields didn\'t match.'});
-
+        {
+            callback({error: true, message: 'The two password fields didn\'t match.'});
+            return;
+        }
+        
         if (!utils.ValidateEmail(req.body['email']))
-            return callback({error: true, message: 'Ivalid email'});
-
+        {
+            callback({error: true, message: 'Ivalid email'});
+            return;
+        }
         callback({error: false, message: ''});
     }
 };
@@ -70,16 +67,22 @@ function UpdateProfile(request, responce, status)
     
     g_constants.dbTables['users'].update("login='"+newLogin+"'", "ROWID='"+savedStatus.id+"'", (err)=>{
         if (err && savedStatus.user != newLogin)
-            return onError(request, responce, 'Error: user already exist');
-
+        {
+            onError(request, responce, 'Error: user already exist');
+            return;
+        }
         g_constants.dbTables['users'].update("email='"+newEmail+"'", "ROWID='"+savedStatus.id+"'", (err)=>{
             if (err && savedStatus.email != newEmail)
-                return onError(request, responce, 'Error: e-mail already exist');
-
+            {
+                onError(request, responce, 'Error: e-mail already exist');
+                return;
+            }
             g_constants.dbTables['users'].update("password='"+newPassword+"'", "ROWID='"+savedStatus.id+"'", (err)=>{
                 if (err)
-                    return onError(request, responce, 'Error: password is not changed');
-
+                {
+                    onError(request, responce, 'Error: password is not changed');
+                    return;
+                }
                 onSuccess(request, responce, 'Success! All records was updated.');
             });
         });

@@ -44,8 +44,8 @@ exports.object = {
         'Your history' : ['Your history', 'Ваши исполненные заявки'],
         'Trade history' : ['Trade history', 'История торгов'],
         'Forgot your password?' : ['Forgot your password?', 'Забыли пароль?'],
-        'New to OpenTrade?' : ['New to OpenTrade?', 'Еще не зарегистрированы на OpenTrade?'],
+        'New to ShorelineCrypto?' : ['New to ShorelineCrypto?', 'Еще не зарегистрированы на ShorelineCrypto?'],
         'Sign up now!' : ['Sign up now!', 'Зарегистрироваться сейчас!'],
-        'OpenTrade - Open Source Cryptocurrency Exchange' : ['OpenTrade - Open Source Cryptocurrency Exchange', 'OpenTrade - Биржа криптовалют с открытым кодом']
+        'ShorelineCrypto - Open Source Cryptocurrency Exchange' : ['ShorelineCrypto - Open Source Cryptocurrency Exchange', 'ShorelineCrypto - Биржа криптовалют с открытым кодом']
     }
 };

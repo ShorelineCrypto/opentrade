@@ -14,16 +14,22 @@ exports.onSubmit = function(req, res)
     
     utils.validateRecaptcha(request, ret => {
         if (ret.error)
-            return SignupError(request, responce, ret.message);
-
+        {
+            SignupError(request, responce, ret.message);
+            return;
+        }
         validateForm(request, ret => {
             if (ret.error)
-                return SignupError(request, responce, ret.message);
-
+            {
+                SignupError(request, responce, ret.message);
+                return;
+            }
             utils.CheckUserExist(request.body['username'], request.body['email'], ret => {
                 if (ret.result == true)
-                    return SignupError(request, responce, ret.message);
-
+                {
+                    SignupError(request, responce, ret.message);
+                    return;
+                }
                 SendConfirmEmail(request, responce);
             });
         });
@@ -32,14 +38,22 @@ exports.onSubmit = function(req, res)
     function validateForm(req, callback)
     {
         if (!req.body || !req.body['username'] || !req.body['email'] || !req.body['password1'] || !req.body['password2'])
-            return callback({error: true, message: 'Bad Request'});
-
+        {
+            callback({error: true, message: 'Bad Request'});
+            return;
+        }
+        
         if (req.body['password1'] != req.body['password2'])
-            return callback({error: true, message: 'The two password fields didn\'t match.'});
-
+        {
+            callback({error: true, message: 'The two password fields didn\'t match.'});
+            return;
+        }
+        
         if (!utils.ValidateEmail(req.body['email']))
-            return callback({error: true, message: 'Ivalid email'});
-
+        {
+            callback({error: true, message: 'Ivalid email'});
+            return;
+        }
         callback({error: false, message: ''});
     }
     
@@ -53,8 +67,10 @@ exports.onSubmit = function(req, res)
         const urlCheck = "https://"+req.headers.host+"/checkmail/"+strCheck;
         mailer.SendSignupConfirmation(req.body['email'], "https://"+req.headers.host, urlCheck, ret => {
             if (ret.error)
-                return SignupError(req, res, ret.message);
-
+            {
+                SignupError(req, res, ret.message);
+                return;
+            }
             SignupSuccess(req, res, {});
         });
     }
@@ -68,8 +84,11 @@ exports.onCheckEmail = function(req, res)
     console.log(JSON.stringify(emailChecker));
     
     if (!emailChecker[strCheck] || !emailChecker[strCheck].body)
-        return utils.render(res, 'pages/registration/signup_confirm', {error: true, message: 'Invalid confirmation link.'})
-
+    {
+        utils.render(res, 'pages/registration/signup_confirm', {error: true, message: 'Invalid confirmation link.'})
+        return;
+    }
+    
     req['body'] = emailChecker[strCheck].body;
     Signup(req, res);
 }
@@ -80,32 +99,24 @@ function Signup(req, res)
     const email = req.body['email'];
     const password = utils.HashPassword(req.body['password1']);
     
-    const IP = escape(req.headers['x-forwarded-for'] || req.connection.remoteAddress);
-    
     utils.CheckUserExist(user, email, ret => {
         if (ret.result == true)
-            return SignupError(req, res, ret.message);
-
-        InsertNewUser(user, email, password, res, IP);
+        {
+            SignupError(req, res, ret.message);
+            return;
+        }
+        InsertNewUser(user, email, password, res);
     });
 }
 
-function InsertNewUser(user, email, password, res, IP)
+function InsertNewUser(user, email, password, res)
 {
     const info = JSON.stringify({});
     g_constants.dbTables['users'].insert(user, email, password, info, err => {
         if (err)
             return utils.render(res, 'pages/registration/signup_confirm', {error: true, message: 'Something wrong (( Please try again. ('+(err.message || JSON.stringify(err))+')'});
-            
-        utils.render(res, 'pages/registration/signup_confirm', {error: false, message: 'Success. Registration confirmed!'});
-        
-        g_constants.dbTables['users'].selectAll('ROWID AS id, *', 'login="'+escape(user)+'" AND email="'+escape(email)+'"', '', (err, rows) => {
-            if (err || !rows || rows.length != 1)
-                return;
-                
-            return utils.UpdateRef(IP, rows[0].id);
-        });
     });
+    utils.render(res, 'pages/registration/signup_confirm', {error: false, message: 'Success. Registration confirmed!'});
 }
 
 function SignupSuccess(request, responce, message)

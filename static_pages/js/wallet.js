@@ -19,13 +19,8 @@ $(() => {
   $.getJSON('/api/v1/public/getmarkets', ret => {
     if (ret.success != true || !ret.result.length)
       return;
-    
-    let n = 0;
-    for (var i=0; i<ret.result.length; i++)   
-      if (ret.result[i].info && ret.result[i].info.active == true)
-        n++;
-        
-    coinsCount = n;
+            
+    coinsCount = ret.result.length;
   });
 });
 
@@ -39,7 +34,10 @@ function onSocketMessage(event)
     return;
     
   if (data.request == 'wallet')
-    return UpdateWallet(data.message);
+  {
+    UpdateWallet(data.message);
+    return;
+  }
 }
 
 function onOpenSocket()
@@ -120,7 +118,7 @@ function ShowDepositAddress(coin)
       $('<div class="row align-items-center"></div>').append(
         $('<div class="col-md-4"></div>').append(
           $('<canvas id="id_coinQR"></canvas>'))).append(
-        $('<div class="input-group col-md-7"></div>').append(
+        $('<div class="input-group col-md-6"></div>').append(
           $('<input id="id_coin_address" type="text" class="form-control" readonly value="'+coinaddress+'">')).append(
           $('<div class="input-group-append"></div>').append(button)))).append(
       $('<script src="/js/qrcode/build/qrcode.min.js"></script>' +

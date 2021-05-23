@@ -1,33 +1,33 @@
 'use strict';
 
-const SUPPORT_EMAIL = 'support@email.com';
-const NOREPLY_EMAIL = 'no-reply@email.com';
+const SUPPORT_EMAIL = 'support@shorelinecrypto.com';
+const NOREPLY_EMAIL = 'no-reply@shorelinecrypto.com';
 
-const MAILER_NAME = 'OpenTrade Mailer';
-const START_MESSAGE = 'OpenTrade started!';
+const MAILER_NAME = 'ShorelineCrypto Mailer';
+const START_MESSAGE = 'ShorelineCrypto started!';
 
-const DashForks = ['DASH', 'WAVI'];
+const DashForks = ['DASH', 'BET'];
 
-exports.DEBUG_LOG = false;
+exports.DEBUG_LOG = true;
 
 exports.share = {
-   tradeEnabled: false,
+   tradeEnabled: true,
    recaptchaEnabled: true,
    
-   my_portSSL: 40443,
+   my_portSSL: 443,
    
-   TRADE_MAIN_COIN: "Marycoin",
-   TRADE_MAIN_COIN_TICKER: "MC",
-   TRADE_DEFAULT_PAIR: "Litecoin"
+   TRADE_MAIN_COIN: "Dogecoin",
+   TRADE_MAIN_COIN_TICKER: "DOGE",
+   TRADE_DEFAULT_PAIR: "Marinecoin"
 };
 
-exports.TRADE_COMISSION = 0.001;
+exports.TRADE_COMISSION = 0.002;
 
 exports.my_port = process.env.PORT || 40080;
 
 exports.SESSION_TIME = 3600*1000; //one hour
 
-exports.recaptcha_pub_key = "6LeX5SQUAAAAAKTieM68Sz4MECO6kJXsSR7_sGP1";
+exports.recaptcha_pub_key = "6LdhAmAUAAAAAI18l7EDc51Ee63eIyq9a3mABqp5";
 const MAX_IP_CONNECTIONS = 100;
 
 exports.dbTables = [
@@ -158,17 +158,6 @@ exports.dbTables = [
            ['uid', 'TEXT UNIQUE']
         ],
         'commands': 'PRIMARY KEY (userRegID, uid)'
-   },
-   {
-       'name' : 'payments',
-       'cols' : [
-           ['userTo', 'INTEGER'],
-           ['userFrom', 'INTEGER'],
-           ['volume', 'TEXT'],
-           ['coin', 'TEXT'],
-           ['time', 'INTEGER'],
-           ['comment', 'TEXT']
-        ]
    }
 ];
 
