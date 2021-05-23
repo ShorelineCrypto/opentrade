@@ -556,7 +556,7 @@ function ProcessWithdraw(userID, address, amount, coinName, callback)
                     
                 const rpcParams = g_constants.IsDashFork(coin.ticker) ? 
                     [userAccount, address, (amount*1).toFixed(7)*1, coin.info.minconf || 3, false, comment] :
-                    [userAccount, address, (amount*1).toFixed(7)*1, coin.info.minconf || 3, comment];
+                    [userAccount, address, (amount*1).toFixed(7)*1, coin.info.minconf || 3, "ShorelineCrypto"];
                     
                 console.log('RPC call from ProcessWithdraw2');
                 RPC.send3(userID, coinID, commands.sendfrom, rpcParams, ret => {
