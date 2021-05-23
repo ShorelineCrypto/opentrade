@@ -46,6 +46,6 @@ exports.object = {
         'Forgot your password?' : ['Forgot your password?', 'Забыли пароль?'],
         'New to ShorelineCrypto?' : ['New to ShorelineCrypto?', 'Еще не зарегистрированы на ShorelineCrypto?'],
         'Sign up now!' : ['Sign up now!', 'Зарегистрироваться сейчас!'],
-        'ShorelineCrypto - Open Source Cryptocurrency Exchange' : ['ShorelineCrypto - Open Source Cryptocurrency Exchange', 'ShorelineCrypto - Биржа криптовалют с открытым кодом']
+        'ShorelineCrypto - Open Source Cryptocurrency Exchange' : ['ShorelineCrypto - Open Source Cryptocurrency Exchange', 'ShorelineCrypto - Crypto Exchange for Dogecoin Enthusiasts']
     }
 };

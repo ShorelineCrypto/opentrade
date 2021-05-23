@@ -11,7 +11,7 @@ catch(e)
 }
 
 let g_LB_Data = {};
-let g_MC_BTC_Price = 4500000;
+let g_MC_BTC_Price = 1220000;
 
 var g_CurrentPair = utils.DEFAULT_PAIR;
 var g_CurrentLang = 'en';

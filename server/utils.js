@@ -38,12 +38,12 @@ exports.isNumeric = function(n) {
 }
 
 exports.isMarketStr = function(market) {
-  const regexpat = /^DOGE\-\w{2,4}$/;
+  const regexpat = /^DOGE\-\w{2,5}$/;
   return regexpat.test(market);
 }
 
 exports.isCurrencyStr = function(currency) {
-  const regexpat = /^\w{2,4}$/;
+  const regexpat = /^\w{2,5}$/;
   return regexpat.test(currency);
 }
 
