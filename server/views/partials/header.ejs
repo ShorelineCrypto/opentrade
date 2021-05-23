@@ -6,22 +6,13 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
               <a class="nav-link" href="/"><%-__('Trade')%></a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" target="_blank" href="https://f1cx.com/markets/mtcdge"><%-__('F1CX')%></a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" target="_blank" href="https://trade.multicoins.org/?ref=867"><%-__('OpenTrade')%></a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" target="_blank" href="https://exchange-options.com"><%-__('Options & Futures')%></a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" target="_blank" href="https://mc-ex.multicoins.org"><%-__('P2P')%></a>
+              <a class="nav-link" target="_blank" href="https://changelly.com/widget/v1?auth=email&from=BTC&to=DOGE&merchant_id=ktfn8m0knyanlkz2&address=&amount=1&ref_id=ktfn8m0knyanlkz2&color=00cf70"><%-__('BTC<->DOGE')%></a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" target="_blank" href="https://discordapp.com/invite/jZMyhKm"><%-__('Discord')%></a>
@@ -32,7 +23,11 @@
             <li class="nav-item active">
               <a class="nav-link" href="/add_coin">Add coin</a>
             </li>
+			<li class="nav-item active">
+              <a class="nav-link" href="/about">About Us</a>
+            </li>
         </ul>
+	</div>
         <ul class="navbar-nav ml-auto">
             <% var key = ''; try{if (status.active) key = status.token || '';}catch(e){}%>
             <% if (!key.length) {%><% include ../partials/nav_not_logged %><% }%>

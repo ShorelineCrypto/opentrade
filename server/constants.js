@@ -6,9 +6,9 @@ const NOREPLY_EMAIL = 'no-reply@shorelinecrypto.com';
 const MAILER_NAME = 'ShorelineCrypto Mailer';
 const START_MESSAGE = 'ShorelineCrypto started!';
 
-const DashForks = ['DASH', 'WAVI'];
+const DashForks = ['RPWN'];
 
-exports.DEBUG_LOG = false;
+exports.DEBUG_LOG = true;
 
 exports.share = {
    tradeEnabled: false,

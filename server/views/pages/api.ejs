@@ -65,7 +65,7 @@ $apikey='__API_KEY__';
 $apisecret='__API_SECRET__';
 $nonce=time();
 
-$uri='https://shorelinecrypto.com/api/v1'.$request .'?apikey='.$apikey.'&ampnonce='.$nonce.'&ampmarket='.$market.'&ampcurrency='.$currency;
+$uri='https://shorelinecrypto.com/api/v1'.$request.'?apikey='.$apikey.'&ampnonce='.$nonce.'&ampcurrency='.$currency;
 $sign=hash_hmac('sha512',$uri,$apisecret);
 $ch = curl_init($uri);
 curl_setopt($ch, CURLOPT_HTTPHEADER, array('apisign:'.$sign));
@@ -95,7 +95,7 @@ function GetOpenOrders(market, callback)
     const nonce = Date.now()+Math.floor(Math.random() * (1000)) + 1;
     const uri = 'https://shorelinecrypto.com/api/v1/market/getopenorders?apikey='+API_PUB_KEY+'&ampnonce='+nonce+'&ampmarket='+market;
     const parsed = require('url').parse(uri, true);
-    const signature = require('crypto').createHmac('sha512', API_PRIV_KEY).update(new Buffer(uri, 'utf-8')).digest('hex');
+    const signature = require('crypto').createHmac('sha512', API_PRIV_KEY).update(new Buffer.from(uri, 'utf-8')).digest('hex');
     
     const options = {
         host: parsed.host,

@@ -125,7 +125,7 @@ exports.SubmitOrder = function(req, res)
                     (req.body.amount*req.body.price+g_constants.TRADE_COMISSION*req.body.amount*req.body.price).toFixed(7)*1 :
                     (req.body.amount*1).toFixed(7)*1;
                 
-                if (fullAmount*1 < 0.00001) return onError(req, res, 'Bad order total ( total < 0.00001 ) '+'( '+fullAmount*1+' < 0.00001 )');
+                if (fullAmount*1 < 0.0000001) return onError(req, res, 'Bad order total ( total < 0.0000001 ) '+'( '+fullAmount*1+' < 0.0000001 )');
                 
                 if (!IsValidBalance(fullAmount)) return onError(req, res, 'Amount error ( '+fullAmount+' )');
                 if (!IsValidBalance(rows[0].balance)) return onError(req, res, 'Balance error ( '+rows[0].balance+' )');
@@ -266,14 +266,14 @@ function ValidateOrderRequest(req)
         req['message'] = 'Bad price ('+req.body.price+')';
         return false;
     }
-    if (req.body.amount*1 < 0.00001)
+    if (req.body.amount*1 < 0.0000001)
     {
-        req['message'] = 'Bad order amount ( amount < 0.00001 ) '+'( '+req.body.amount*1+' < 0.00001 )';
+        req['message'] = 'Bad order amount ( amount < 0.0000001 ) '+'( '+req.body.amount*1+' < 0.0000001 )';
         return false;
     }
-    if (req.body.price*1 < 0.00001)
+    if (req.body.price*1 < 0.0000001)
     {
-        req['message'] = 'Bad order price ( price < 0.00001 )'+' ( '+req.body.price*1+' < 0.00001 )';
+        req['message'] = 'Bad order price ( price < 0.0000001 )'+' ( '+req.body.price*1+' < 0.0000001 )';
         return false;
     }
     return true;

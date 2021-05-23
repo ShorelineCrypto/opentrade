@@ -510,8 +510,8 @@ exports.onAccountGetBalance = function(req, res)
                             const balance = (message.balance || 0)*1; 
                             const awaiting = (message.awaiting || 0)*1;
                             const hold = (message.hold || 0)*1;
-                                
-                            return onSuccess(req, res, {Currency: message.coin.ticker, Balance: (balance+awaiting+hold).toFixed(8)*1, Available: balance.toFixed(8)*1, Pending: awaiting.toFixed(8)*1});
+                            // No need to return, would blank results with below enabled   
+                            //return onSuccess(req, res, {Currency: message.coin.ticker, Balance: (balance+awaiting+hold).toFixed(8)*1, Available: balance.toFixed(8)*1, Pending: awaiting.toFixed(8)*1});
                         }
                         catch (e) {
                             return onError(req, res, e.message);
