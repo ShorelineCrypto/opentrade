@@ -186,7 +186,10 @@ exports.onGetMarketSummary = async function(req, res)
     console.log('period='+period+" queryStr="+JSON.stringify(queryStr));
     if (!utils.isNumeric(period))
         return onError(req, res, 'Bad request. Period is not numeric');
-    
+
+    if (!utils.isMarketStr(queryStr.market))
+        return onError(req, res, 'Bad request. Parameter "market" is in wrong format');
+
     const data = queryStr.market.split('-');
     if (!data || !data.length || data.length != 2)
         return onError(req, res, 'Bad request. Parameter "market" is invalid');
@@ -283,7 +286,7 @@ exports.onGetMarketHistory = function(req, res)
         return  onError(req, res, 'Bad request. Parameter "market" is invalid');
 
 
-    g_constants.dbTables['coins'].selectAll('name, ticker, info', 'ticker="'+data[1]+'"', '', (err, rows) => {
+    g_constants.dbTables['coins'].selectAll('name, ticker, info', 'ticker="'+escape(data[1])+'"', '', (err, rows) => {
         try
         {
             if (err || !rows) throw new Error(err && err.message ? err.message : 'unknown database error');
@@ -406,7 +409,7 @@ exports.onMarketCancel = function(req, res)
                 if (ret.success == false) throw new Error(ret.message);
                 if (ret.key.write == 0) throw new Error('apikey disabled for write');
                 
-                g_constants.dbTables['orders'].selectAll('ROWID AS id', 'uuid="'+queryStr.uuid+'"', '', (err, rows) => {
+                g_constants.dbTables['orders'].selectAll('ROWID AS id', 'uuid="'+escape(queryStr.uuid)+'"', '', (err, rows) => {
                     if (err || !rows || !rows.length) 
                         return onError(req, res, 'Order with this uuid not found');
 
@@ -684,7 +687,7 @@ exports.onAccountGetOrder = function(req, res)
                 if (ret.success == false) throw new Error(ret.message);
                 if (ret.key.read == 0) throw new Error('apikey disabled for read');
                 
-                g_constants.dbTables['orders'].selectAll('ROWID AS id, *', 'uuid="'+queryStr.uuid+'"', '', (err, rows) => {
+                g_constants.dbTables['orders'].selectAll('ROWID AS id, *', 'uuid="'+escape(queryStr.uuid)+'"', '', (err, rows) => {
                     if (err || !rows || !rows.length) 
                         return onError(req, res, 'Order with this uuid not found');
                     

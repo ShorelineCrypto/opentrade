@@ -11,7 +11,7 @@ $(() => {
         {
             const coinTicker = ret.result[i].MarketCurrency;
             const coinName = ret.result[i].MarketCurrencyLong;
-            $.getJSON( "/api/v1/public/getmarketsummary?market="+utils.MAIN_COIN+"-"+coinTicker, ret => {
+            $.getJSON( "/api/v1/public/getmarketsummary?market="+"DOGE-"+coinTicker, ret => {
  
                 const hold = (ret && ret.success && ret.result && ret.result.coin_info && ret.result.coin_info.hold) ?
                   ret.result.coin_info.hold : 0;

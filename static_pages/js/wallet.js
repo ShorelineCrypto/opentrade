@@ -144,7 +144,7 @@ function ShowWithdrawDialog(coin, coinID, coinTicker)
   if (coin == '---TTC---')
       message = '<div class="p-3 mb-2 bg-danger text-white">WARNING!!! ---TTC--- IS NOT TittieCoin !!!</div>';
 
-  $.getJSON( "/api/v1/public/getmarketsummary?market="+utils.MAIN_COIN+"-"+coinTicker, ret => {
+  $.getJSON( "/api/v1/public/getmarketsummary?market="+"DOGE-"+coinTicker, ret => {
     
     const hold = (ret && ret.success && ret.result && ret.result.coin_info && ret.result.coin_info.hold) ?
       ret.result.coin_info.hold : 0;
