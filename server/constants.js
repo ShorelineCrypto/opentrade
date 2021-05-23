@@ -6,12 +6,12 @@ const NOREPLY_EMAIL = 'no-reply@shorelinecrypto.com';
 const MAILER_NAME = 'ShorelineCrypto Mailer';
 const START_MESSAGE = 'ShorelineCrypto started!';
 
-const DashForks = ['DASH', 'BET'];
+const DashForks = ['DASH', 'WAVI'];
 
-exports.DEBUG_LOG = true;
+exports.DEBUG_LOG = false;
 
 exports.share = {
-   tradeEnabled: true,
+   tradeEnabled: false,
    recaptchaEnabled: true,
    
    my_portSSL: 443,
@@ -158,6 +158,17 @@ exports.dbTables = [
            ['uid', 'TEXT UNIQUE']
         ],
         'commands': 'PRIMARY KEY (userRegID, uid)'
+   },
+   {
+       'name' : 'payments',
+       'cols' : [
+           ['userTo', 'INTEGER'],
+           ['userFrom', 'INTEGER'],
+           ['volume', 'TEXT'],
+           ['coin', 'TEXT'],
+           ['time', 'INTEGER'],
+           ['comment', 'TEXT']
+        ]
    }
 ];
 
