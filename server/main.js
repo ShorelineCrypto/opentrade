@@ -16,7 +16,7 @@ console.log = function(d, userID) {
     if (!g_constants.DEBUG_LOG)
         return;
 
-  log_file.write(util.format(d) + '\n');
+  // log_file.write(util.format(d) + '\n');
   log_stdout.write(util.format(d) + '\n');
   
   if (userID)
