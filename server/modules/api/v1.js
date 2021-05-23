@@ -181,9 +181,6 @@ exports.onGetMarketSummary = async function(req, res)
     if (!queryStr.market)
         return onError(req, res, 'Bad request. Parameter "market" not found');
         
-    if (!utils.isMarketStr(queryStr.market))
-        return onError(req, res, 'Bad request. Parameter "market" is in wrong format');
-      
     const period = (queryStr.period && (queryStr.period == 24 || queryStr.period == 250 || queryStr.period == 1000 || queryStr.period == 6000)) ? queryStr.period*1 : 24;
 
     console.log('period='+period+" queryStr="+JSON.stringify(queryStr));

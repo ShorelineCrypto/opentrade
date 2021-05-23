@@ -14,7 +14,7 @@ let g_LB_Data = {};
 let g_MC_BTC_Price = 4000000;
 
 var g_CurrentPair = utils.DEFAULT_PAIR;
-var g_CurrentLang = 'ru';
+var g_CurrentLang = 'en';
 
 var g_bFirstChatFilling = true;
 const chat_languages = ['ru', 'en'];
