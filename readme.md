@@ -1,13 +1,23 @@
-# OpenTrade is the best opensource cryptocurrency exchange!
+# OpenTrade is the Easiest Open Source Cryptocurrency Exchange!
 
-Life version https://trade.multicoins.org/
+Live version https://shorelinecrypto.com/
 
-Step-by-step install instructions:
+ShorelineCrypto version of OpenTrade (SLC version) is fork of original OpenTrade exchange (MC version, part of Marycoin eco-system)  with custom security Enhancement Patches. The key features and differences between the original and this versions are:
 
-1. Register on the VPS hosting like this https://m.do.co/c/1ece5d76d5cd
-2. Create "Droplet" Ubuntu 16 x64 / 1GB / 1vCPU / 25 GB SSD
+(1) Basecoin in trade pairs are changed from Marycoin to Dogecoin.
+
+(2) No fractional reserve based wallet withdraw allowed on admin account. The latest MC version opentrade software introduced coupon feature where admin account coin withdraw can be allowed even if the coins are not in wallet. SLC version forked off before this coupon feature commits so that fractional reserve wallet withdraw is not allowed even on admin account.
+
+(3) Extensive security patches on API code where strict regular expression is enforced to deny SQL injection hack in input variables.
+
+(4) Extensive security patches on profile/registration page where strict regular expression is enforced to deny SQL injection hack in username/emails
+
+
+## Step-by-step install instructions:
+
+1. Register on the VPS hosting like this  https://www.vultr.com/?ref=8411446
+2. Create "Droplet" Ubuntu 18.04  x64 / 1GB / 1vCPU / 25 GB SSD
 3. Log in to Droplet console over SSH
-4
 
 ```
 [sudo] apt-get update
@@ -16,22 +26,35 @@ curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh -o 
 bash install_nvm.sh
 [sudo] reboot
 
-nvm install 12.6.0
+nvm install 12.18.4
 
-git clone [shoreline github] 
+git clone [shoreline github URL] 
 cd opentrade
 
 sudo npm install 
 
 mkdir ~/opentrade/server/database
 
-1. sqlite3 module maye need fix,  npm uninstall and install --save 
-2. ejs crash ,  ru below:
-npm unstall ejs
-npm install ejs-lint
+```
+
+### Special Note
+1. sqlite3 module maye need fix
+```
+ npm uninstall and install --save 
+```
+2. ejs crash ,  run below:
+```
+ npm unstall ejs
+ npm install ejs-lint
+```
+
+### Setup Your Web Site Domain and SSL Certificate, Google Recaptcha
+
+Purchase your domain and SSL certificate from vendor like Namecheap (affiliate link: https://www.anrdoezrs.net/am/100415199/impressions/page/am.js ), 
+Setup Google Recaptcha with public/private key to be ready for the exchange launch.
 
 
-## Here is an example of file ~/opentrade/server/modules/private_constants.js Edit as per your config.
+### Here is an example of file ~/opentrade/server/modules/private_constants.js Edit as per your config.
 
 ```
 'use strict';
@@ -55,7 +78,7 @@ cd  ~/opentrade/server
 sudo node main.js
 ```
 
-In the browser address string type https://127.0.0.1:40443
+In the browser address string type https://127.0.0.1:443
 You will see OpenTrade.
 
 The first registered user will be exchange administrator. 
@@ -92,6 +115,16 @@ Also you must encrypt wallet.dat by the command
 
 *If coin is not supported encryption (like ZerroCash and it forks) then coin could not be added to the OpenTrade*
 
+### Special Note for Bitcoin and Litecoin
+
+New version of bitcoin/litecoin core wallet removed bitcoin-rpc features that are required on this SLC version of opentrade. For compatibility 
+purpose, please run older version bitcoin and litecoin such as below:
+ * bitcoin 0.17.1
+ * litecoin 0.17.1
+Plus add one line in both bitcoin and litecoin conf file to enable bitcoin-rpc feature on v0.17.1
+```
+deprecatedrpc=accounts
+```
 
 When coin daemons will be configured and started
 
@@ -106,18 +139,18 @@ All visible coins should be appear in the Wallet. You shoud create default coin 
 
 File ~/opentrade/server/constants.js have constant that you can change
 
-https://github.com/3s3s/opentrade/blob/master/server/constants.js#L5
+https://github.com/ShorelineCrypto/opentrade/blob/master/server/constants.js#L19
 
 ```
-exports.TRADE_MAIN_COIN = "Marycoin"; //change Marycoin to your main coin pair
-exports.TRADE_DEFAULT_PAIR = "Litecoin"; //change Litecoin to your default coin pair
-exports.TRADE_COMISSION = 0.001; //change trade comission percent
+exports.TRADE_MAIN_COIN = "Dogecoin"; //change Dogecoin to your main coin pair 
+exports.TRADE_DEFAULT_PAIR = "Nengcoin"; //change Nengcoin to your default coin pair 
+exports.TRADE_COMISSION = 0.002; //change trade comission percent
 
 exports.recaptcha_pub_key = "6LeX5SQUAAAAAKTieM68Sz4MECO6kJXsSR7_sGP1"; //change to your recaptcha public key
 
-exports.NOREPLY_EMAIL = 'no-reply@multicoins.org'; //change no-reply email
-exports.SUPPORT_EMAIL = 'ivanivanovkzv@gmail.com'; //change to your valid email for support requests
-exports.my_portSSL = 40443; //change to your ssl port
+exports.NOREPLY_EMAIL = 'no-reply@multicoins.org'; //change no-reply email 
+exports.SUPPORT_EMAIL = 'ivanivanovkzv@gmail.com'; //change to your valid email for support requests 
+exports.my_portSSL = 443; //change to your ssl port
 
 ```
 
