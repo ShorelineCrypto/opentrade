@@ -2,6 +2,9 @@
 
 Live version https://shorelinecrypto.com/
 
+Discord: https://discordapp.com/invite/jZMyhKm
+Bitcointalk Ann: https://bitcointalk.org/index.php?topic=5339980.0
+
 ShorelineCrypto version of OpenTrade (SLC version) is fork of original OpenTrade exchange (MC version, part of Marycoin eco-system)  with custom security Enhancement Patches. The key features and differences between the original and this versions are:
 
 (1) Basecoin in trade pairs are changed from Marycoin to Dogecoin.
@@ -121,6 +124,7 @@ New version of bitcoin/litecoin core wallet removed bitcoin-rpc features that ar
 purpose, please run older version bitcoin and litecoin such as below:
  * bitcoin 0.17.1
  * litecoin 0.17.1
+
 Plus add one line in both bitcoin and litecoin conf file to enable bitcoin-rpc feature on v0.17.1
 ```
 deprecatedrpc=accounts
