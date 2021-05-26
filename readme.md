@@ -4,6 +4,8 @@ Live version https://shorelinecrypto.com/
 
 Discord: https://discordapp.com/invite/jZMyhKm
 
+Reddit: https://www.reddit.com/r/shorelinecrypto/
+
 Bitcointalk Ann: https://bitcointalk.org/index.php?topic=5339980.0
 
 ShorelineCrypto version of OpenTrade (SLC version) is fork of original OpenTrade exchange (MC version, part of Marycoin eco-system)  with custom security Enhancement Patches. The key features and differences between the original and this versions are:
@@ -20,7 +22,7 @@ ShorelineCrypto version of OpenTrade (SLC version) is fork of original OpenTrade
 ## Step-by-step install instructions:
 
 1. Register on the VPS hosting like this  https://www.vultr.com/?ref=8411446
-2. Create "Droplet" Ubuntu 18.04  x64 / 1GB / 1vCPU / 25 GB SSD
+2. Create "SSD Cloud Instances" Ubuntu 18.04  x64 / 1GB / 1vCPU / 25 GB SSD
 3. Log in to Droplet console over SSH
 
 ```
