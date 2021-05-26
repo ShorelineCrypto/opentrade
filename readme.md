@@ -3,6 +3,7 @@
 Live version https://shorelinecrypto.com/
 
 Discord: https://discordapp.com/invite/jZMyhKm
+
 Bitcointalk Ann: https://bitcointalk.org/index.php?topic=5339980.0
 
 ShorelineCrypto version of OpenTrade (SLC version) is fork of original OpenTrade exchange (MC version, part of Marycoin eco-system)  with custom security Enhancement Patches. The key features and differences between the original and this versions are:
