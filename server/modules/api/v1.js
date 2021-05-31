@@ -78,24 +78,26 @@ exports.onGetMarkets24 = function(req, res)
     for (let i=0; i<coinList.length; i++)
        {
         let tmpDict = {
-         "Name": "",
-         "Bid" : 0,
-         "Ask" : 0,
-         "Last" : 0,
-         "Volume24Hr" : 0,
-         "OpenBuyOrders":0,
-         "OpenSellOrders":0,
+         "name": "",
+         "market": "",
+         "bid" : 0,
+         "ask" : 0,
+         "last" : 0,
+         "volume24Hr" : 0,
+         "openbuyorders":0,
+         "opensellorders":0,
         }
         const BTC = coinList[i];
         market.BTC_History24(BTC, data2 => {
                console.log(JSON.stringify(data2.result));
-               tmpDict["Name"] =  utils.stdMarketStr(data2.result.MarketName);
-               tmpDict["Bid"] = data2.result.Bid;
-               tmpDict["Ask"] = data2.result.Ask;
-               tmpDict["Last"] = data2.result.Last;
-               tmpDict["Volume24Hr"] = data2.result.Volume;
-               tmpDict["OpenBuyOrders"] = data2.result.OpenBuyOrders;
-               tmpDict["OpenSellOrders"] = data2.result.OpenSellOrders;
+               tmpDict["name"] =  utils.stdMarketStr(data2.result.market);
+               tmpDict["market"] =  data2.result.market;
+               tmpDict["bid"] = data2.result.Bid;
+               tmpDict["ask"] = data2.result.Ask;
+               tmpDict["last"] = data2.result.Last;
+               tmpDict["volume24hr"] = data2.result.Volume;
+               tmpDict["openbuyorders"] = data2.result.OpenBuyOrders;
+               tmpDict["opensellorders"] = data2.result.OpenSellOrders;
                tmpData.push(tmpDict);
                console.log(JSON.stringify(tmpData));
                if ( i == (coinList.length - 1) )
@@ -124,6 +126,8 @@ exports.onGetMarkets = function(req, res)
             for (var i=0; i<rows.length; i++)
             {
                 rows[i].info = JSON.parse(utils.Decrypt(rows[i].info));
+                if (unescape(rows[i].ticker) == g_constants.share.TRADE_MAIN_COIN_TICKER)
+                    continue;
 
                 data.push({
                     MarketCurrency: unescape(rows[i].ticker),
@@ -131,7 +135,8 @@ exports.onGetMarkets = function(req, res)
                     MarketCurrencyLong: unescape(rows[i].name),
                     "BaseCurrencyLong": g_constants.share.TRADE_MAIN_COIN,
                     "MinTradeSize": 0,
-                    "MarketName": g_constants.share.TRADE_MAIN_COIN_TICKER+"-"+unescape(rows[i].ticker),
+                    "name": utils.stdMarketStr(g_constants.share.TRADE_MAIN_COIN_TICKER+"-"+unescape(rows[i].ticker)),
+                    "market": g_constants.share.TRADE_MAIN_COIN_TICKER+"-"+unescape(rows[i].ticker),
                     "IsActive": true,
                     "Created": "2014-02-13T00:00:00",
                     "info": rows[i].info,
@@ -220,7 +225,7 @@ exports.onGetMarketSummary = async function(req, res)
     if (!data || !data.length || data.length != 2)
         return onError(req, res, 'Bad request. Parameter "market" is invalid');
 
-    const MarketName = queryStr.market;
+    const market = queryStr.market;
     
     try
     {
@@ -250,7 +255,7 @@ exports.onGetMarketSummary = async function(req, res)
                 onError(req, res, err && err.message ? err.message : 'unknown database error');
                 return;
             }
-            let retData = {MarketName: MarketName, High: 0, Low: 0, Volume: 0, Last: 0, Bid: 0, Ask: 0, OpenBuyOrders: 0, OpenSellOrders: 0, coin_icon_src: coin_icon_src, coin_info: coin_info}
+            let retData = {market: market, High: 0, Low: 0, Volume: 0, Last: 0, Bid: 0, Ask: 0, OpenBuyOrders: 0, OpenSellOrders: 0, coin_icon_src: coin_icon_src, coin_info: coin_info}
             
             if (rows.length)
             {
