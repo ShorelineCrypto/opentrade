@@ -4,6 +4,10 @@ const utils = require("../../utils.js");
 const g_constants = require("../../constants.js");
 const WebSocket = require('ws');
 const mailer = require("../mailer");
+const database = require("../../database");
+const wallet = require("./wallet")
+const orders = require("./orders");
+
 
 exports.Init = function()
 {
@@ -12,6 +16,28 @@ exports.Init = function()
     })
     setInterval(exports.UpdateMarket, 10000);
 };
+
+
+exports.BTC_History24 = function(ticker, callback)
+{
+    const MC = g_constants.share.TRADE_MAIN_COIN_TICKER;
+    let market = MC + '-' + ticker ;
+    const uri = 'https://shorelinecrypto.com/api/v1/public/getmarketsummary?market='+market+'&period=24';
+    const parsed = require('url').parse(uri, true);
+    
+    const options = {
+        host: parsed.host,
+        path: parsed.path,
+    };
+    
+    require("https").request(options, res => {
+        let output = '';
+        res.on('data', chunk => { output += chunk; });
+        res.on('end', () => { return callback(JSON.parse(output)); }); }).end();
+};
+
+
+let g_LastMarketData = {};
 
 exports.UpdateMarket = function()
 {
@@ -36,6 +62,7 @@ exports.UpdateMarket = function()
             data.push(rows[i]);
         }
         const msg = {coins: data};
+        g_LastMarketData = msg;
         
         // Broadcast to everyone else.
         const msgString = JSON.stringify({request: 'market', message: msg});
@@ -45,4 +72,8 @@ exports.UpdateMarket = function()
         });
     });
 };
+
+exports.GetMarketData = function(callback) {
+    callback(g_LastMarketData);
+}
 

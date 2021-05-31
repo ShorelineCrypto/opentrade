@@ -2,12 +2,14 @@
 
 const SUPPORT_EMAIL = 'support@shorelinecrypto.com';
 const NOREPLY_EMAIL = 'no-reply@shorelinecrypto.com';
+const DOMAIN = 'localhost';
 
 const MAILER_NAME = 'ShorelineCrypto Mailer';
 const START_MESSAGE = 'ShorelineCrypto started!';
 
 const DashForks = ['DASH'];
 
+exports.coinList = ['CHTA','NENG'];
 exports.DEBUG_LOG = true;
 
 exports.share = {

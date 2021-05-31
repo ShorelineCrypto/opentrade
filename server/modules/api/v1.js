@@ -69,18 +69,40 @@ exports.onGetLastMarketData = function(req, res)
     });
 }
 
-exports.onGetExchangeSummary = function(req, res)
+
+exports.onGetMarkets24 = function(req, res)
 {
-    market.GetMarketSummary24(data => {
-        let TotalMarkets = 0;
-        let v24 = 0;
-        for (let key in data)
-        {
-            v24 += data[key].Volume*1;
-            TotalMarkets++;
+   try {
+   let tmpData = [];
+    const coinList = g_constants.coinList;
+    for (let i=0; i<coinList.length; i++)
+       {
+        let tmpDict = {
+         "Market": "",
+         "Bid" : 0,
+         "Ask" : 0,
+         "Last" : 0,
+         "Volume24Hr" : 0,
         }
-        return onSuccess(req, res, {TotalMarkets: TotalMarkets, v24: v24, data: data});
-    });
+        const BTC = coinList[i];
+        market.BTC_History24(BTC, data2 => {
+               console.log(JSON.stringify(data2.result));
+               tmpDict["Market"] =  data2.result.MarketName ;
+               tmpDict["Bid"] = data2.result.Bid;
+               tmpDict["Ask"] = data2.result.Ask;
+               tmpDict["Last"] = data2.result.Last;
+               tmpDict["Volume24Hr"] = data2.result.Volume;
+               tmpData.push(tmpDict);
+               console.log(JSON.stringify(tmpData));
+               if ( i == (coinList.length - 1) )
+                    onSuccess(req, res, tmpData);
+            })
+       }
+   }
+    catch (e)
+    {
+        return onError(req, res, e.message || 'unknown error, failed on market24');
+    }
 }
 
 exports.onGetMarkets = function(req, res)
@@ -267,6 +289,7 @@ exports.onGetMarketSummary = async function(req, res)
     }
     //});
 }
+
 
 exports.onGetMarketHistory = function(req, res)
 {
