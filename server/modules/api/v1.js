@@ -78,20 +78,24 @@ exports.onGetMarkets24 = function(req, res)
     for (let i=0; i<coinList.length; i++)
        {
         let tmpDict = {
-         "Market": "",
+         "Name": "",
          "Bid" : 0,
          "Ask" : 0,
          "Last" : 0,
          "Volume24Hr" : 0,
+         "OpenBuyOrders":0,
+         "OpenSellOrders":0,
         }
         const BTC = coinList[i];
         market.BTC_History24(BTC, data2 => {
                console.log(JSON.stringify(data2.result));
-               tmpDict["Market"] =  data2.result.MarketName ;
+               tmpDict["Name"] =  utils.stdMarketStr(data2.result.MarketName);
                tmpDict["Bid"] = data2.result.Bid;
                tmpDict["Ask"] = data2.result.Ask;
                tmpDict["Last"] = data2.result.Last;
                tmpDict["Volume24Hr"] = data2.result.Volume;
+               tmpDict["OpenBuyOrders"] = data2.result.OpenBuyOrders;
+               tmpDict["OpenSellOrders"] = data2.result.OpenSellOrders;
                tmpData.push(tmpDict);
                console.log(JSON.stringify(tmpData));
                if ( i == (coinList.length - 1) )

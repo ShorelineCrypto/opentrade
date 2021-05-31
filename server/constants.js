@@ -2,14 +2,14 @@
 
 const SUPPORT_EMAIL = 'support@shorelinecrypto.com';
 const NOREPLY_EMAIL = 'no-reply@shorelinecrypto.com';
-const DOMAIN = 'localhost';
+const DOMAIN = 'shorelinecrypto.com';
 
 const MAILER_NAME = 'ShorelineCrypto Mailer';
 const START_MESSAGE = 'ShorelineCrypto started!';
 
 const DashForks = ['DASH'];
 
-exports.coinList = ['CHTA','NENG'];
+exports.coinList = ['BTC','CHTA','CURE','DASH','FCK','LTC','MTLMC','NDL','NENG','MC','O2O','QBC','SBIT'];
 exports.DEBUG_LOG = true;
 
 exports.share = {
@@ -210,6 +210,7 @@ exports.SUPPORT_EMAIL = PRIVATE.SUPPORT_EMAIL || SUPPORT_EMAIL;
 exports.NOREPLY_EMAIL = PRIVATE.NOREPLY_EMAIL || NOREPLY_EMAIL;
 exports.START_MESSAGE = PRIVATE.START_MESSAGE || START_MESSAGE;
 exports.MAILER_NAME = PRIVATE.MAILER_NAME || MAILER_NAME;
+exports.DOMAIN = PRIVATE.DOMAIN || DOMAIN;
 
 exports.DONATORS = [
     {userID: 1, percent: 99},

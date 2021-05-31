@@ -22,7 +22,7 @@ exports.BTC_History24 = function(ticker, callback)
 {
     const MC = g_constants.share.TRADE_MAIN_COIN_TICKER;
     let market = MC + '-' + ticker ;
-    const uri = 'https://shorelinecrypto.com/api/v1/public/getmarketsummary?market='+market+'&period=24';
+    const uri = 'https://'+g_constants.DOMAIN+'/api/v1/public/getmarketsummary?market='+market+'&period=24';
     const parsed = require('url').parse(uri, true);
     
     const options = {
