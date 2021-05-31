@@ -42,10 +42,6 @@ exports.isMarketStr = function(market) {
   return regexpat.test(market);
 }
 
-exports.isMarketStr = function(market) {
-  const regexpat = /^DOGE\-\w{2,5}$/;
-  return regexpat.test(market);
-}
 
 exports.stdMarketStr = function(market) {
   const tmpdata = market.split('-');
