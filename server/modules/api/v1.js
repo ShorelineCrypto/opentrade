@@ -72,10 +72,13 @@ exports.onGetLastMarketData = function(req, res)
 
 exports.onGetMarkets24 = function(req, res)
 {
-   try {
-   let tmpData = [];
-    const coinList = g_constants.coinList;
-    for (let i=0; i<coinList.length; i++)
+    let ret = GetCache('GetMarkets24');
+    if (ret)
+        return onSuccess(req, res, ret);
+    try {
+     let tmpData = [];
+     const coinList = g_constants.coinList;
+     for (let k=0; k<coinList.length; k++)
        {
         let tmpDict = {
          "name": "",
@@ -87,7 +90,7 @@ exports.onGetMarkets24 = function(req, res)
          "openbuyorders":0,
          "opensellorders":0,
         }
-        const BTC = coinList[i];
+        const BTC = coinList[k];
         market.BTC_History24(BTC, data2 => {
                console.log(JSON.stringify(data2.result));
                tmpDict["name"] =  utils.stdMarketStr(data2.result.market);
@@ -99,12 +102,15 @@ exports.onGetMarkets24 = function(req, res)
                tmpDict["openbuyorders"] = data2.result.OpenBuyOrders;
                tmpDict["opensellorders"] = data2.result.OpenSellOrders;
                tmpData.push(tmpDict);
-               console.log(JSON.stringify(tmpData));
-               if ( i == (coinList.length - 1) )
-                    onSuccess(req, res, tmpData);
+               if ( k == (coinList.length - 1) ) {
+                  console.log(JSON.stringify(tmpData));
+                  onSuccess(req, res, tmpData);
+                  SetCache('GetMarkets24', 30000, tmpdata);
+               }
+
             })
        }
-   }
+    }
     catch (e)
     {
         return onError(req, res, e.message || 'unknown error, failed on market24');
