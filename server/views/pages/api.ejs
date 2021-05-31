@@ -168,6 +168,31 @@ function GetOpenOrders(market, callback)
                 <hr>
                 <h4>Public Api</h4>
                 <div class="api-doc">
+                                      <h5>/public/getmarkets24</h5>
+                    <p>Used to get the last 24 hour summary of all active exchanges with trading pair names converted to standard pair format</p>
+                    Parameters 
+                    <p>None</p>
+                    Request: 
+                    <pre>https://shorelinecrypto.com/api/v1/public/getmarkets24</pre>
+                    Response:
+                    <pre>
+                      
+    {"success":true,"message":"","result": [
+  {"Name":"BTC/DOGE","Bid":"113744.40992100","Ask":"118387.03889700","Last":"110685.65","Volume24Hr":0,"OpenBuyOrders":7,"OpenSellOrders":59},
+  {"Name":"MC/DOGE","Bid":"0.00030000","Ask":"0.05000000","Last":"0.00030000000","Volume24Hr":"1974.99800000","OpenBuyOrders":4,"OpenSellOrders":8},
+  {"Name":"QBC/DOGE","Bid":"0.01010101","Ask":"0.02900000","Last":"0.011000000","Volume24Hr":"1312.36883500","OpenBuyOrders":2,"OpenSellOrders":5},
+  {"Name":"DASH/DOGE","Bid":"574.21615789","Ask":"603.66314034","Last":"492.47790","Volume24Hr":0,"OpenBuyOrders":3,"OpenSellOrders":55},
+  {"Name":"LTC/DOGE","Bid":"545.50253283","Ask":"567.76794233","Last":"576.03644","Volume24Hr":0,"OpenBuyOrders":2,"OpenSellOrders":73},
+  {"Name":"MTLMC/DOGE","Bid":"0.00003000","Ask":"0.00037900","Last":"0.000030000000","Volume24Hr":0,"OpenBuyOrders":12,"OpenSellOrders":29},
+  {"Name":"O2O/DOGE","Bid":"0.00000070","Ask":"0.00000758","Last":"0.0000011000000","Volume24Hr":0,"OpenBuyOrders":4,"OpenSellOrders":31},
+  {"Name":"NDL/DOGE","Bid":"0.00000510","Ask":"0.00001020","Last":"0.0000051000000","Volume24Hr":"1057551.70000000","OpenBuyOrders":8,"OpenSellOrders":43},
+  {"Name":"CHTA/DOGE","Bid":"0.00000562","Ask":"0.00001000","Last":"0.000010000000","Volume24Hr":"99800.39900000","OpenBuyOrders":8,"OpenSellOrders":174},
+  {"Name":"NENG/DOGE","Bid":"0.00000220","Ask":"0.00000376","Last":"0.0000022000000","Volume24Hr":"1460000.00000000","OpenBuyOrders":20,"OpenSellOrders":95},
+  {"Name":"FCK/DOGE","Bid":"0.00001100","Ask":"0.00035000","Last":"0.00030000000","Volume24Hr":0,"OpenBuyOrders":5,"OpenSellOrders":28},
+  {"Name":"CURE/DOGE","Bid":"0.00110000","Ask":"0.33000000","Last":"1.0100000","Volume24Hr":0,"OpenBuyOrders":3,"OpenSellOrders":4},
+  {"Name":"SBIT/DOGE","Bid":"0.00002400","Ask":"0.00010000","Last":"0.00011000000","Volume24Hr":0,"OpenBuyOrders":28,"OpenSellOrders":26}]}
+      
+                    </pre>
                     <h5>/public/getmarkets</h5>
                     <p>Used to get the open and available trading markets at ShorelineCrypto along with other meta data. </p>
                     Parameters 
@@ -271,7 +296,7 @@ function GetOpenOrders(market, callback)
 
                     </pre>
                     <h5>/public/getmarketsummary</h5>
-                    <p>Used to get the last 24 hour summary of all active exchanges </p>
+                    <p>Used to get the last 24 hour summary of single trading pair</p>
                     Parameters 
                     <table class='table'>
                         <tr>
@@ -284,26 +309,37 @@ function GetOpenOrders(market, callback)
                             <td>required</td>
                             <td>a string literal for the market (ex: DOGE-NENG)</td>
                         </tr>
+                        <tr>
+                            <td><code>period</code></td>
+                            <td>optional</td>
+                            <td>period in hours. Can be: 24, 250, 1000 or 6000. By default period=24</td>
+                        </tr>
                     </table>
                     Request: 
-                    <pre>https://shorelinecrypto.com/api/v1/public/getmarketsummary?market=DOGE-NENG</pre>
+                    <pre>https://shorelinecrypto.com/api/v1/public/getmarketsummary?market=DOGE-NENG&period=250</pre>
                     Response:
                     <pre>
     {
 	"success" : true,
 	"message" : "",
-	"result" : [{
+	"result" : {
 			"MarketName" : "DOGE-NENG",
-			"High" : 0.0001350000,
-			"Low" : 0.0001200000,
-			"Volume" : 383300.97619253,
-			"Last" : 0.0001349998,
-			"Bid" : 0.0001271001,
-			"Ask" : 0.0001291100,
-			"OpenBuyOrders" : 45,
-			"OpenSellOrders" : 45
+			"High" : "0.00000377",
+			"Low" : "0.00000208",
+			"Volume" : "109033814.25400001",
+			"Last" : "0.0000022000000",
+			"Bid" : "0.00000220",
+			"Ask" : "0.00000376",
+			"OpenBuyOrders" : 20,
+			"OpenSellOrders" : 45,
+      "coin_icon_src":"https%3A//raw.githubusercontent.com/ShorelineCrypto/nengcoin/master/src/qt/res/icons/bitcoin.png",
+      "coin_info":{"minconf":6,
+                   "hold":1,
+                    "page":"https://bitcointalk.org/index.php?topic=5027091.0",
+                    "active":true,
+                    "withdraw":"Enabled",
+                    "orders":"Enabled"}
 		}
-        ]
     }
                     </pre>
                     
@@ -333,7 +369,7 @@ function GetOpenOrders(market, callback)
 			"Id" : 319435,
 			"TimeStamp" : "2018-01-01T03:21:20.08",
 			"Quantity" : 0.30802438,
-			"Price" : 0.01263400,
+			"Price" : 0.0001263400,
 			"Total" : 0.00389158,
 			"FillType" : "FILL",
 			"OrderType" : "BUY"
@@ -341,7 +377,7 @@ function GetOpenOrders(market, callback)
 			"Id" : 319433,
 			"TimeStamp" : "2018-01-01T03:21:20.08",
 			"Quantity" : 0.31820814,
-			"Price" : 0.01262800,
+			"Price" : 0.0001262800,
 			"Total" : 0.00401833,
 			"FillType" : "FILL",
 			"OrderType" : "BUY"
@@ -349,7 +385,7 @@ function GetOpenOrders(market, callback)
 			"Id" : 319379,
 			"TimeStamp" : "2018-01-01T02:58:48.127",
 			"Quantity" : 49.64643541,
-			"Price" : 0.01263200,
+			"Price" : 0.0001263200,
 			"Total" : 0.62713377,
 			"FillType" : "FILL",
 			"OrderType" : "SELL"
@@ -357,7 +393,7 @@ function GetOpenOrders(market, callback)
 			"Id" : 319378,
 			"TimeStamp" : "2018-01-01T02:58:46.27",
 			"Quantity" : 0.35356459,
-			"Price" : 0.01263200,
+			"Price" : 0.0001263200,
 			"Total" : 0.00446622,
 			"FillType" : "FILL",
 			"OrderType" : "SELL"
