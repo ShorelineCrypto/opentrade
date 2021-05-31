@@ -83,7 +83,7 @@ exports.onGetMarkets24 = function(req, res)
          "bid" : 0,
          "ask" : 0,
          "last" : 0,
-         "volume24Hr" : 0,
+         "volume24hr" : 0,
          "openbuyorders":0,
          "opensellorders":0,
         }
