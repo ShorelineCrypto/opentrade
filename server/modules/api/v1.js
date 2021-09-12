@@ -94,7 +94,7 @@ exports.onGetMarkets24 = function(req, res)
         market.BTC_History24(BTC, data2 => {
                console.log(JSON.stringify(data2.result));
                tmpDict["pair"] =  utils.stdMarketStr(data2.result.market);
-               tmpDict["market"] =  data2.result.market;
+               tmpDict["market"] =  utils.stdMarketStr(data2.result.market);
                tmpDict["bid"] = data2.result.Bid;
                tmpDict["ask"] = data2.result.Ask;
                tmpDict["last"] = data2.result.Last;
