@@ -81,7 +81,8 @@ exports.onGetMarkets24 = function(req, res)
      for (let k=0; k<coinList.length; k++)
        {
         let tmpDict = {
-         "name": "",
+         "pair": "",
+         "market": "",
          "bid" : 0,
          "ask" : 0,
          "last" : 0,
@@ -92,7 +93,8 @@ exports.onGetMarkets24 = function(req, res)
         const BTC = coinList[k];
         market.BTC_History24(BTC, data2 => {
                console.log(JSON.stringify(data2.result));
-               tmpDict["name"] =  utils.stdMarketStr(data2.result.market);
+               tmpDict["pair"] =  utils.stdMarketStr(data2.result.market);
+               tmpDict["market"] =  data2.result.market;
                tmpDict["bid"] = data2.result.Bid;
                tmpDict["ask"] = data2.result.Ask;
                tmpDict["last"] = data2.result.Last;
@@ -139,7 +141,7 @@ exports.onGetMarkets = function(req, res)
                     MarketCurrencyLong: unescape(rows[i].name),
                     "BaseCurrencyLong": g_constants.share.TRADE_MAIN_COIN,
                     "MinTradeSize": 0,
-                    "name": utils.stdMarketStr(g_constants.share.TRADE_MAIN_COIN_TICKER+"-"+unescape(rows[i].ticker)),
+                    "pair": utils.stdMarketStr(g_constants.share.TRADE_MAIN_COIN_TICKER+"-"+unescape(rows[i].ticker)),
                     "market": g_constants.share.TRADE_MAIN_COIN_TICKER+"-"+unescape(rows[i].ticker),
                     "IsActive": true,
                     "Created": "2014-02-13T00:00:00",
