@@ -49,6 +49,12 @@ exports.stdMarketStr = function(market) {
   return stdstr;
 }
 
+exports.stdMarketStrOrd = function(market) {
+  const tmpdata = market.split('-');
+  const stdstr = tmpdata[1] + '-' + tmpdata[0];
+  return stdstr;
+}
+
 
 exports.isCurrencyStr = function(currency) {
   const regexpat = /^\w{2,5}$/;
