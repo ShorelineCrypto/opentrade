@@ -55,7 +55,6 @@ exports.stdMarketStrOrd = function(market) {
   return stdstr;
 }
 
-
 exports.isCurrencyStr = function(currency) {
   const regexpat = /^\w{2,5}$/;
   return regexpat.test(currency);

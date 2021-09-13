@@ -142,7 +142,7 @@ exports.onGetMarkets = function(req, res)
                     "BaseCurrencyLong": g_constants.share.TRADE_MAIN_COIN,
                     "MinTradeSize": 0,
                     "pair": utils.stdMarketStr(g_constants.share.TRADE_MAIN_COIN_TICKER+"-"+unescape(rows[i].ticker)),
-                    "OpentradeMarket": g_constants.share.TRADE_MAIN_COIN_TICKER+"-"+unescape(rows[i].ticker),
+                    "market": g_constants.share.TRADE_MAIN_COIN_TICKER+"-"+unescape(rows[i].ticker),
                     "IsActive": true,
                     "Created": "2014-02-13T00:00:00",
                     "info": rows[i].info,

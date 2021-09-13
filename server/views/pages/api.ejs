@@ -169,7 +169,7 @@ function GetOpenOrders(market, callback)
                 <h4>Public Api</h4>
                 <div class="api-doc">
                                       <h5>/public/getmarkets24</h5>
-                    <p>Used to get the last 24 hour summary of all active exchanges with opentrade 'market' strings converted to standard pair order like 'pair' field</p>
+                    <p>Used to get the last 24 hour summary of all active exchanges with opentrade 'market' strings converted to standard pair order like 'pair' field for easier API parsing</p>
                     Parameters 
                     <p>None</p>
                     Request: 
@@ -195,7 +195,7 @@ function GetOpenOrders(market, callback)
       
                     </pre>
                     <h5>/public/getmarkets</h5>
-                    <p>Used to get the open and available trading markets at ShorelineCrypto along with other meta data. </p>
+                    <p>Used to get the open and available trading markets at ShorelineCrypto along with other meta data. 'market' string is in OpenTrade original style</p>
                     Parameters 
                     <p>None</p>
                     Request: 
