@@ -50,7 +50,7 @@ mkdir ~/opentrade/server/database
 ```
 2. ejs crash ,  run below:
 ```
- npm unstall ejs
+ npm uninstall ejs
  npm install ejs-lint
 ```
 
