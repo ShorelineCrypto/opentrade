@@ -1,4 +1,6 @@
-# OpenTrade is the Easiest Open Source Cryptocurrency Exchange!
+# OpenTrade behind shorelinecrypto exchange was hacked on 11/11/2021. 
+# This software is no longer deemed secure. Please checkout Shorelinecrypto 
+# bitcointalk ann page or discord announcement for latest announcement and development on this issue
 
 Live version https://shorelinecrypto.com/
 
