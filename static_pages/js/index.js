@@ -149,12 +149,18 @@ function UpdateMCFromLB()
 
 function AddCoinInfo(info)
 {
-  if (!info.result || !info.result.coin_info || !info.result.coin_info.page)
+  if (!info.result || !info.result.coin_info || !info.result.coin_info.page || !info.result.coin_info.site || !info.result.coin_info.explorer || !info.result.coin_info.twitter || !info.result.coin_info.telegram || !info.result.coin_info.discord)
     return;
     
   $('#coin_legend').text(g_CurrentPair);
   
-  const p1 = $('<p><strong>Forum</strong> ANN: <a target="_blank" href="'+(info.result.coin_info.page || "")+'">'+g_CurrentPair+' @ bitcointalk</a></p>');
+  const p1 = $('<strong>Info '+g_CurrentPair+':</strong>'+
+  ' <a target="_blank" href="'+(info.result.coin_info.site || "")+'"><img class="img-fluid" src="https://w7.pngwing.com/pngs/357/433/png-transparent-computer-icons-website-web-design-logo-grey-thumbnail.png" height="20" width="20"></a>'+
+  ' <a target="_blank" href="'+(info.result.coin_info.explorer || "")+'"><img class="img-fluid" src="https://www.freeiconspng.com/uploads/website-icon-11.png" height="20" width="20"></a>'+
+  ' <a target="_blank" href="'+(info.result.coin_info.page || "")+'"><img class="img-fluid" src="https://logodownload.org/wp-content/uploads/2017/06/bitcoin-logo-5-1.png" height="20" width="20"></a>'+
+  ' <a target="_blank" href="'+(info.result.coin_info.twitter || "")+'"><img class="img-fluid" src="https://toppng.com/uploads/preview/transparent-background-twitter-logo-11549680611xgjb22i2ts.png" height="20" width="20"></a>'+
+  ' <a target="_blank" href="'+(info.result.coin_info.telegram || "")+'"><img class="img-fluid" src="https://www.freepnglogos.com/uploads/telegram-logo-png-0.png" height="20" width="20"></a>'+
+  ' <a target="_blank" href="'+(info.result.coin_info.discord || "")+'"><img class="img-fluid" src="https://www.freepnglogos.com/uploads/discord-logo-png/discord-will-provide-official-verification-esports-team-4.png" height="20" width="20"></a>');
   $('#coin_info').empty().append(p1);
 }
 

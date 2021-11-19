@@ -105,7 +105,53 @@ $('#coin-page').change(e => {
     $('#coin-info').val(JSON.stringify(info));
 });
 
+///////////////////////////////////
 
+$('#coin-site').change(e => { 
+    var info = {};
+    try {info = JSON.parse($('#coin-info').val())}catch(e){}
+    
+    info['site'] = $('#coin-site').val();
+    
+    $('#coin-info').val(JSON.stringify(info));
+});
+//////////////////////////
+$('#coin-explorer').change(e => { 
+    var info = {};
+    try {info = JSON.parse($('#coin-info').val())}catch(e){}
+    
+    info['explorer'] = $('#coin-explorer').val();
+    
+    $('#coin-info').val(JSON.stringify(info));
+});
+////////////////////////
+$('#coin-twitter').change(e => { 
+    var info = {};
+    try {info = JSON.parse($('#coin-info').val())}catch(e){}
+    
+    info['twitter'] = $('#coin-twitter').val();
+    
+    $('#coin-info').val(JSON.stringify(info));
+});
+/////////////////////
+$('#coin-telegram').change(e => { 
+    var info = {};
+    try {info = JSON.parse($('#coin-info').val())}catch(e){}
+    
+    info['telegram'] = $('#coin-telegram').val();
+    
+    $('#coin-info').val(JSON.stringify(info));
+});
+///////////////////
+$('#coin-discord').change(e => { 
+    var info = {};
+    try {info = JSON.parse($('#coin-info').val())}catch(e){}
+    
+    info['discord'] = $('#coin-discord').val();
+    
+    $('#coin-info').val(JSON.stringify(info));
+});
+/////////////////////////////////
 $('#coin-minconf').change(e => { 
     if (!isInt($('#coin-minconf').val()))
         return;
@@ -454,6 +500,11 @@ function UpdateAdminCoins(data, client_request)
         $('#coin-minconf').val(info['minconf'] || "");
         $('#coin-hold').val(info['hold'] || "");
         $('#coin-page').val(info['page'] || "");
+        $('#coin-site').val(info['site'] || "");
+		$('#coin-explorer').val(info['explorer'] || "");
+		$('#coin-twitter').val(info['twitter'] || "");
+		$('#coin-telegram').val(info['telegram'] || "");
+		$('#coin-discord').val(info['discord'] || "");	
     }
 
     $("#coins-select option[value='"+currentCoin+"']").prop('selected', true);
