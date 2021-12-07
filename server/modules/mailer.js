@@ -24,7 +24,7 @@ exports.SendSignupConfirmation = function(email, url, urlCheck, callback)
     {
         let isSent = false;
         sendmail({
-            from: 'ShorelineCrypto Mailer <'+g_constants.NOREPLY_EMAIL+'>',
+            from: g_constants.MAILER_NAME+' Mailer <'+g_constants.NOREPLY_EMAIL+'>',
             sender: g_constants.NOREPLY_EMAIL,
             to: unescape(email),
             subject: subject,
