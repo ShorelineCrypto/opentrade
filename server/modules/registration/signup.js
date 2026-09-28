@@ -67,9 +67,6 @@ exports.onCheckEmail = function(req, res)
 {
     const strCheck = req.url.substr(req.url.indexOf('/', 1)+1);
     
-    console.log(strCheck);
-    console.log(JSON.stringify(emailChecker));
-    
     if (!emailChecker[strCheck] || !emailChecker[strCheck].body)
         return utils.render(res, 'pages/registration/signup_confirm', {error: true, message: 'Invalid confirmation link.'})
 

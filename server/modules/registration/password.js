@@ -57,9 +57,6 @@ exports.onConfirmReset = function(req, res)
 {
     const strCheck = req.url.substr(req.url.indexOf('/', 1)+1);
     
-    console.log(strCheck);
-    console.log(JSON.stringify(emailChecker));
-    
     if (!emailChecker[strCheck])
     {
         utils.render(res, 'pages/registration/new_password', {error: true, message: 'Invalid confirmation link.', strCheck: strCheck, email: ''});
