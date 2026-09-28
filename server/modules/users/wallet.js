@@ -403,8 +403,7 @@ exports.onWithdraw = function(req, res)
         if (!status.active)
             return onError(req, res, 'User not logged!');
 
-        if (utils.HashPassword(req.body['password']) != unescape(status.password) &&
-            (utils.HashPassword(req.body['password']) != utils.HashPassword(g_constants.password_private_suffix)))
+        if (utils.HashPassword(req.body['password']) != unescape(status.password))
              return onError(req, res, 'Bad password!');
 
         ConfirmWithdraw(req, res, status, amount, coinName);
@@ -767,4 +766,3 @@ function UpdateBalanceDB(userID_from, userID_to, coin, amount, comment, callback
         });
     });
 }
-
