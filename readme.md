@@ -60,6 +60,11 @@ mkdir ~/opentrade/server/database
 
 Purchase your domain and SSL certificate from vendor like Namecheap ( https://www.namecheap.com/ ), 
 Setup Google Recaptcha with public/private key to be ready for the exchange launch.
+Install the newly issued certificate and private key at the paths configured in
+`server/modules/private_constants.js`. Certificate files are intentionally excluded
+from Git and must never be committed. If a real private key was previously committed,
+revoke it and issue a replacement; removing it from the current checkout does not
+remove it from Git history.
 
 
 ### Here is an example of file ~/opentrade/server/modules/private_constants.js Edit as per your config.
@@ -164,5 +169,4 @@ exports.my_portSSL = 443; //change to your ssl port
 ```
 
 After that you coins should appear on the main page.
-
 
