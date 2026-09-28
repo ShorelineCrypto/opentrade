@@ -133,10 +133,10 @@ function SendAllCoinsData(ws)
             
         for (var i=0; i<rows.length; i++)
         {
-            rows[i].address = utils.Decrypt(rows[i].address);
-            rows[i].rpc_user = utils.Decrypt(rows[i].rpc_user);
-            rows[i].rpc_password = utils.Decrypt(rows[i].rpc_password);
             rows[i].info = utils.Decrypt(rows[i].info);
+            delete rows[i].address;
+            delete rows[i].rpc_user;
+            delete rows[i].rpc_password;
         }
         if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify({request: 'coinsadmin', message: rows, client_request: ws['client_request'] || ""}));
     });
@@ -163,13 +163,19 @@ function SaveCoin(data, callback)
                 callback();
                 return;
             }
-            g_constants.dbTables['coins'].update(
-                    "ticker='"+escape(data.ticker)+"', " +
-                    "icon='"+escape(data.icon)+"', " +
-                    "address='"+escape(utils.Encrypt(data.address))+"', " +
-                    "rpc_user='"+escape(utils.Encrypt(data.rpc_user))+"', " +
-                    "rpc_password='"+escape(utils.Encrypt(data.rpc_password))+"', " +
-                    "info='"+escape(utils.Encrypt(data.info || '{}'))+"'", "name='"+escape(data.name)+"'", callback);
+            const updates = [
+                "ticker='"+escape(data.ticker)+"'",
+                "icon='"+escape(data.icon)+"'",
+                "info='"+escape(utils.Encrypt(data.info || '{}'))+"'"
+            ];
+            if (data.address)
+                updates.push("address='"+escape(utils.Encrypt(data.address))+"'");
+            if (data.rpc_user)
+                updates.push("rpc_user='"+escape(utils.Encrypt(data.rpc_user))+"'");
+            if (data.rpc_password)
+                updates.push("rpc_password='"+escape(utils.Encrypt(data.rpc_password))+"'");
+
+            g_constants.dbTables['coins'].update(updates.join(', '), "name='"+escape(data.name)+"'", callback);
         }
     );
 }
@@ -191,4 +197,3 @@ function SendRPC(coin, command, params, callback)
         }
     });
 }
-

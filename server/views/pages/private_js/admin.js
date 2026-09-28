@@ -442,9 +442,9 @@ function UpdateAdminCoins(data, client_request)
         
         $('#coin-ticker').val(unescape(data[i].ticker));  
         $('#coin-icon').val(unescape(data[i].icon));  
-        $('#coin-rpc_address').val(unescape(data[i].address));  
-        $('#coin-rpc_user').val(unescape(data[i].rpc_user));  
-        $('#coin-rpc_password').val(unescape(data[i].rpc_password));  
+        $('#coin-rpc_address').val('');
+        $('#coin-rpc_user').val('');
+        $('#coin-rpc_password').val('');
         $('#coin-info').val(unescape(data[i].info));  
 
         var info = {};
